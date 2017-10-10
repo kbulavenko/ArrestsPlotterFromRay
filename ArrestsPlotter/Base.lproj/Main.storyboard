@@ -1,14 +1,18 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -16,11 +20,42 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o7T-Wx-nb4">
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <items>
+                                    <barButtonItem title="Refresh" id="gXe-iV-VVv">
+                                        <connections>
+                                            <action selector="refreshTapped:" destination="BYZ-38-t0r" id="cZd-IZ-1mh"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="top" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rGY-5e-G91">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                            </mapView>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="o7T-Wx-nb4" secondAttribute="bottom" id="EvZ-Jp-st6"/>
+                            <constraint firstItem="rGY-5e-G91" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="F7s-R6-ltD"/>
+                            <constraint firstAttribute="trailing" secondItem="o7T-Wx-nb4" secondAttribute="trailing" id="KNb-wF-fA8"/>
+                            <constraint firstItem="o7T-Wx-nb4" firstAttribute="top" secondItem="rGY-5e-G91" secondAttribute="bottom" id="cFx-6c-fRf"/>
+                            <constraint firstItem="o7T-Wx-nb4" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="cWs-QF-e9y"/>
+                            <constraint firstAttribute="trailing" secondItem="rGY-5e-G91" secondAttribute="trailing" id="emr-4f-kCa"/>
+                            <constraint firstItem="o7T-Wx-nb4" firstAttribute="top" secondItem="rGY-5e-G91" secondAttribute="bottom" id="h8j-8N-0Ql"/>
+                            <constraint firstItem="rGY-5e-G91" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="sus-Pj-GZM"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="mapView" destination="rGY-5e-G91" id="jDa-GK-eT2"/>
+                        <outlet property="toolbar" destination="o7T-Wx-nb4" id="FbY-So-gXZ"/>
+                        <outlet property="toolbarButtonRefresh" destination="gXe-iV-VVv" id="fsE-q4-PYO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="117.59999999999999" y="123.68815592203899"/>
         </scene>
     </scenes>
 </document>
