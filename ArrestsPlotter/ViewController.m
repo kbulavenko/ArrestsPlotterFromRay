@@ -42,7 +42,7 @@
     // 1
     CLLocationCoordinate2D zoomLocation;
     zoomLocation.latitude   = 39.281516;
-    zoomLocation.longitude  = -76.580806;
+    zoomLocation.longitude  = -76.6475852768532;
     
     // 2
     MKCoordinateRegion viewRegion  =
@@ -118,8 +118,23 @@
     // 3 Creates a URL for the web service endpoint to query.
  //  NSURL   *url    = [NSURL URLWithString: @"https://data.baltimorecity.gov/api/views/3i3v-ibrt/rows.json?accessType=DOWNLOAD"];
     
-    NSURL   *url    = [NSURL URLWithString: @"http://data.baltimorecity.gov/resource/icjs-e3jg.json?$$app_token=NqJsfTZ2QN3kOx3a2dz8kRtpu"];
+   // NSURL   *url    = [NSURL URLWithString: @"http://data.baltimorecity.gov/resource/icjs-e3jg.json?accessType=DOWNLOAD$$app_token=NqJsfTZ2QN3kOx3a2dz8kRtpu"];
     
+    
+//    NSURL   *url    = [NSURL URLWithString: @"https://data.baltimorecity.gov/api/views/3i3v-ibrt/rows.json?accessType=DOWNLOAD"];
+    
+    NSString      *centerLongtitude   =  [NSString   stringWithFormat: @"%0.13f",centerLocation.longitude];
+    
+    NSString      *urlString = [NSString   stringWithFormat:@"http://data.baltimorecity.gov/resource/icjs-e3jg.json?longitude=%@", centerLongtitude];
+    
+    NSURL   *url    = [NSURL URLWithString: urlString];
+    NSLog(@"url1  = %@", url);
+
+    
+//url = [NSURL   URLWithString:   @"http://data.baltimorecity.gov/resource/icjs-e3jg.json?longitude=-76.6475852768532"];
+    
+  //  NSLog(@"url2  = %@", url);
+
     
    // https://data.baltimorecity.gov/resource/icjs-e3jg.json
     // https://data.baltimorecity.gov/resource/icjs-e3jg.json?arrest=17108516
@@ -127,24 +142,52 @@
     
     //  https://data.baltimorecity.gov/api/views/3i3v-ibrt/rows.json?accessType=DOWNLOAD
     
-    // 4 Creates a ASIHTTPRequest request, and sets it up as a POST, passing in the JSON string as data.
+//    // 4 Creates a ASIHTTPRequest request, and sets it up as a POST, passing in the JSON string as data.
+//    ASIHTTPRequest   *_request = [ASIHTTPRequest requestWithURL:  url];
+//    __weak  ASIHTTPRequest  *request    = _request;
+//    
+//    request.requestMethod  = @"POST";
+//    [request  addRequestHeader:@"Content-Type" value: @"application/json"];
+//   // NSLog(@"\n\n\njson = %@", json);
+//    [request appendPostData: [json dataUsingEncoding: NSUTF8StringEncoding]];
+//    
+//    // 5  Sets up two blocks for the completion and failure. So far on this site we’ve been using callback methods (instead of blocks) with ASIHTTPRequest, but I wanted to show you the block method here because it’s kinda cool and convenient. Right now, these do nothing but log the results.
+//    [request setDelegate: self];
+//    [request setAuthenticationNeededBlock:^{
+//        NSLog(@"Authentification block started");
+//        
+//    }];
+//    [request setCompletionBlock:^{
+//        NSString    *responseString  = [request responseString];
+//        NSLog(@"\n\nResponse : %@", responseString);
+//        // 7
+//        [self plotCrimePosition: request.responseData];
+//    }];
+//    [request setFailedBlock:^{
+//        NSError *error = [request error];
+//        NSLog(@"Error: %@", error.localizedDescription);
+//    }];
+
+    //*****************   Begin GET session    *******************
+    
+    NSLog(@"*****************   Begin GET session    *******************");
     ASIHTTPRequest   *_request = [ASIHTTPRequest requestWithURL:  url];
     __weak  ASIHTTPRequest  *request    = _request;
     
-    request.requestMethod  = @"POST";
-    [request  addRequestHeader:@"Content-Type" value: @"application/json"];
-   // NSLog(@"\n\n\njson = %@", json);
-    [request appendPostData: [json dataUsingEncoding: NSUTF8StringEncoding]];
+    request.requestMethod  = @"GET";
+  //  [request  addRequestHeader:@"Content-Type" value: @"application/json"];
+    // NSLog(@"\n\n\njson = %@", json);
+   // [request appendPostData: [json dataUsingEncoding: NSUTF8StringEncoding]];
     
     // 5  Sets up two blocks for the completion and failure. So far on this site we’ve been using callback methods (instead of blocks) with ASIHTTPRequest, but I wanted to show you the block method here because it’s kinda cool and convenient. Right now, these do nothing but log the results.
     [request setDelegate: self];
-    [request setAuthenticationNeededBlock:^{
-        NSLog(@"Authentification block started");
-        
-    }];
+//    [request setAuthenticationNeededBlock:^{
+//        NSLog(@"Authentification block started");
+//        
+//    }];
     [request setCompletionBlock:^{
         NSString    *responseString  = [request responseString];
-        NSLog(@"\n\nResponse : %@", responseString);
+        NSLog(@"\n\nResponse : \n\n%@\n\nRESPONSEEND \n\n\n", responseString);
         // 7
         [self plotCrimePosition: request.responseData];
     }];
@@ -152,6 +195,15 @@
         NSError *error = [request error];
         NSLog(@"Error: %@", error.localizedDescription);
     }];
+    
+
+    
+    
+    
+    //***************
+    
+    
+    
     
     // 6 Finally, starts the request going asynchronously. When it completes, either the completion or error block will be executed.
     [request startAsynchronous];
@@ -178,32 +230,69 @@
 //}
 
 - (void)plotCrimePosition: (NSData *)responseData {
+    
+    NSLog(@"plotCrimePosition");
+    
     for(id<MKAnnotation> annotation in _mapView.annotations) {
         
         NSLog(@"Annotation = %@", annotation);
         [_mapView removeAnnotation: annotation];
     }
     
-    NSDictionary    *root   = [NSJSONSerialization JSONObjectWithData: responseData
-                                                              options: 0
-                                                                error: nil];
-    NSLog(@" \n\n\nroot  = %@", root);
-    NSArray         *data   = [root objectForKey: @"data"];
-    
-   // NSArray         *data   = [root objectForKey: @"meta"];
-    
-    NSLog(@"\n\n\nDATA\nDATA\nDATA = %@", data);
-    for (NSArray *row in data) {
+    if([NSJSONSerialization  isValidJSONObject: responseData])  {
+        NSLog(@"responseData is valid");
         
-        NSNumber  *latitude         = [[row objectAtIndex:22] objectAtIndex: 1];
+    } else {
+        NSLog(@"responseData is *NOT* valid");
+        //return;
+    }
+    
+    
+    // NSDictionary    *root   = [NSJSONSerialization JSONObjectWithData: responseData
+    //                                                           options: 0
+    //                                                             error: nil];
+    NSError     *errorSerialisation   = nil;
+     NSArray    *root   = [NSJSONSerialization JSONObjectWithData: responseData
+                                                               options: NSJSONReadingMutableContainers
+                                                                 error: &errorSerialisation];
+    
+    
+    NSLog(@"errorSerialisation = %@", errorSerialisation);
+    
+    
+    
+    
+    NSLog(@" \n\n\nroot  = %@   \n\n\n ROOTEND", root);
+    NSArray         *data   =  root; // [NSKeyedUnarchiver    unarchiveObjectWithData: root];
+    
+    //NSArray         *data   =(NSArray *)  root ;
+    
+    
+  //  NSArray           *data   =  [NSJSONSerialization JSONObjectWithData: responseData
+//                                                options: 0
+//                                                error: nil];
+    
+//    NSArray         *data   = [root objectForKey: @"data"];
+    
+    NSLog(@"\n\n\nDATA\nDATA\nDATA = %@, \n DATA.count = %li   \n\n\n DATAEND \n\n", data, data.count);
+    
+    
+    int  i= 0;
+    for (NSDictionary *row in data) {
+        NSLog(@"Iteration %i  : row =  %@, class  = %@", i++, row, [row class]);
+        NSNumber  *latitude         =  row[@"latitude"];
+        //[[row objectAtIndex:22] objectAtIndex: 1];
         NSLog(@"\n\n\nlatitude = %@", latitude);
-        NSNumber  *longtitude       = [[row objectAtIndex: 22] objectAtIndex: 2];
+        NSNumber  *longtitude       = row[@"longitude"];
+        //[[row objectAtIndex: 22] objectAtIndex: 2];
         NSLog(@"longtitude = %@", longtitude);
 
-        NSString  *crimeDescription = [row objectAtIndex: 18];
+        NSString  *crimeDescription =  row[@"chargedescription"];
+        //[row objectAtIndex: 18];
         NSLog(@"crimeDescription = %@", crimeDescription);
 
-        NSString  *address          = [row objectAtIndex: 14];
+        NSString  *address          =  row[@"arrestlocation"];
+        //[row objectAtIndex: 14];
         NSLog(@"address = %@", address);
 
         
