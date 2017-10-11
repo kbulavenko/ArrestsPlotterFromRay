@@ -41,8 +41,13 @@
 -(void)viewWillAppear:(BOOL)animated {
     // 1
     CLLocationCoordinate2D zoomLocation;
-    zoomLocation.latitude   = 39.281516;
-    zoomLocation.longitude  = -76.6475852768532;
+//    zoomLocation.latitude   = 39.281516;
+//    zoomLocation.longitude  = -76.6475852768532;
+    zoomLocation.latitude   = 39.2843706746922;
+    zoomLocation.longitude  = -76.6386039056014;
+    
+    //39.2843706746922°, -76.6386039056014°
+    
     
     // 2
     MKCoordinateRegion viewRegion  =
@@ -125,9 +130,18 @@
     
     NSString      *centerLongtitude   =  [NSString   stringWithFormat: @"%0.13f",centerLocation.longitude];
     
-    NSString      *urlString = [NSString   stringWithFormat:@"http://data.baltimorecity.gov/resource/icjs-e3jg.json?longitude=%@", centerLongtitude];
     
-    NSURL   *url    = [NSURL URLWithString: urlString];
+    NSString   *latitudeMin   =   [NSString   stringWithFormat: @"%0.13f",mapRegion.center.latitude - mapRegion.span.latitudeDelta / 1.0];
+    NSString   *latitudeMax   =   [NSString   stringWithFormat: @"%0.13f",mapRegion.center.latitude + mapRegion.span.latitudeDelta / 1.0];
+    NSString   *longitudeMin  =   [NSString   stringWithFormat: @"%0.13f",mapRegion.center.longitude - mapRegion.span.longitudeDelta / 1.0];
+    NSString   *longitudeMax  =   [NSString   stringWithFormat: @"%0.13f",mapRegion.center.longitude + mapRegion.span.longitudeDelta / 1.0];
+    
+    
+    NSLog(@" longitudeMin = %@, longitudeMax  = %@, latitudeMin  = %@, latitudeMax  = %@  ", longitudeMin, longitudeMax, latitudeMin, latitudeMax);
+    
+    NSString      *urlString = [NSString   stringWithFormat:@"http://data.baltimorecity.gov/resource/icjs-e3jg.json?$where=latitude between %@ and %@ and longitude between %@ and %@" ,latitudeMin, latitudeMax , longitudeMin, longitudeMax ];
+    NSLog(@"urlString = %@", urlString);
+    NSURL   *url    = [NSURL URLWithString: [urlString stringByAddingPercentEncodingWithAllowedCharacters: [NSCharacterSet  URLQueryAllowedCharacterSet]]];
     NSLog(@"url1  = %@", url);
 
     
