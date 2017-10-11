@@ -28,7 +28,6 @@
 		19B4C3EB1F8B6F1D0055A11F /* MyLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 19B4C3EA1F8B6F1D0055A11F /* MyLocation.m */; };
 		19B4C3ED1F8B73490055A11F /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B4C3EC1F8B73490055A11F /* AddressBook.framework */; };
 		19B4C3EF1F8B75300055A11F /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B4C3EE1F8B75300055A11F /* Contacts.framework */; };
-		19B4C3F21F8B86030055A11F /* arrest.png in Resources */ = {isa = PBXBuildFile; fileRef = 19B4C3F11F8B86030055A11F /* arrest.png */; };
 		19B4C3F41F8BA8530055A11F /* libz.1.1.3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 19B4C3F31F8BA8530055A11F /* libz.1.1.3.tbd */; };
 		19CAEBAA1F7D3F780008124D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CAEBA91F7D3F780008124D /* main.m */; };
 		19CAEBAD1F7D3F790008124D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 19CAEBAC1F7D3F790008124D /* AppDelegate.m */; };
@@ -76,7 +75,6 @@
 		19B4C3EA1F8B6F1D0055A11F /* MyLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyLocation.m; sourceTree = "<group>"; };
 		19B4C3EC1F8B73490055A11F /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		19B4C3EE1F8B75300055A11F /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
-		19B4C3F11F8B86030055A11F /* arrest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrest.png; sourceTree = "<group>"; };
 		19B4C3F31F8BA8530055A11F /* libz.1.1.3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.1.3.tbd; path = usr/lib/libz.1.1.3.tbd; sourceTree = SDKROOT; };
 		19CAEBA51F7D3F770008124D /* ArrestsPlotter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArrestsPlotter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		19CAEBA91F7D3F780008124D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -178,7 +176,6 @@
 		19B4C3F01F8B85F50055A11F /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				19B4C3F11F8B86030055A11F /* arrest.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -290,7 +287,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				19CAEBB81F7D3F7C0008124D /* LaunchScreen.storyboard in Resources */,
-				19B4C3F21F8B86030055A11F /* arrest.png in Resources */,
 				19CAEBB51F7D3F7C0008124D /* Assets.xcassets in Resources */,
 				19CAEBB31F7D3F7B0008124D /* Main.storyboard in Resources */,
 				1911BB1C1F8ADB1B00AFBAE9 /* command.json in Resources */,

@@ -20,7 +20,6 @@
 - (IBAction)refreshTapped:(id)sender;
 
 
--(void)addToolbarY:(CGFloat)   y;
 
 
 @end

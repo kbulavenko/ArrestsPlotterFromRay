@@ -39,7 +39,7 @@
 
 // implementation MKAnnotation
 
-- (NSString *) titel {
+- (NSString *) title {
     return _name;
 }
 - (NSString *)subtitle {

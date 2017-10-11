@@ -16,4 +16,10 @@
 - (MKMapItem *)mapItem;
 
 
+
+- (NSString *) title;
+- (NSString *)subtitle;
+- (CLLocationCoordinate2D)coordinate;
+
+
 @end
